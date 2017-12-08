@@ -36,7 +36,7 @@ validation_sentence_id_paths = (os.path.join(all_data_in_numpy_dir, x) for x in 
 # ----------------------------------------------------------------------------------------------------------------------
 # build RNN
 # ----------------------------------------------------------------------------------------------------------------------
-n_hidden = 128
+n_hidden = 20
 input_size = 22453
 output_size = 3
 learning_rate = 0.005
@@ -55,8 +55,12 @@ def train(rnn, category_tensor, line_tensor):
 
     rnn.zero_grad()
 
-    for i in range(line_tensor.size()[0]):
-        output, hidden = rnn(line_tensor[i], hidden)
+    sequence_length = line_tensor.size()[0]
+    for i in range(sequence_length):
+        if i < sequence_length - 1:
+            hidden = rnn(line_tensor[i], hidden)
+        elif i == sequence_length - 1:
+            output = rnn.get_output(line_tensor[i], hidden)
 
     loss = Loss(output, category_tensor)
     loss.backward()
@@ -84,7 +88,7 @@ def evaluate(rnn, line_tensor):
 # ----------------------------------------------------------------------------------------------------------------------
 # Train
 # ----------------------------------------------------------------------------------------------------------------------
-MAX_ITER = 10000
+MAX_ITER = 20000
 
 current_loss = 0
 print_every = 40
@@ -113,8 +117,8 @@ for i in range(MAX_ITER):
     pred_output, loss = train(rnn, actual_output, input)
     current_loss += loss
 
-    if i % print_every == 0:
-        print ("iter-{}, current_loss: ".format(i, current_loss))
+    if i!= 0 and i % print_every == 0:
+        print ("iter-{}, current_loss: {}".format(i, current_loss))
         loss_plot_list.append(current_loss)
         current_loss = 0
 

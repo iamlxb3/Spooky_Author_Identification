@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 data/
+trained_model/
 
 # C extensions
 *.so
@@ -139,3 +140,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+data/skip_gram_output_dict
