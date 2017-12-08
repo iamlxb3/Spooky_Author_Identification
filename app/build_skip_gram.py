@@ -9,8 +9,8 @@ import copy
 import numpy as np
 from nltk.stem.wordnet import WordNetLemmatizer
 
-import io
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf8')
+# import io
+# sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf8')
 
 
 
@@ -66,7 +66,6 @@ def _process_word(word):
 word_dict_0_count = pickle.load(open(train_word_dict_0_count_file_path, 'rb'))
 word_dict_with_count = pickle.load(open(train_word_dict_file_path, 'rb'))
 
-skip_gram_output_dict = collections.defaultdict(lambda: 0)
 
 # add more keys
 skip_gram_len = 3
@@ -77,11 +76,21 @@ for start_word in START_LIST:
 for end_word in END_LIST:
     word_dict_0_count[end_word] = 0
 
+# get word index
+ordered_words = sorted(word_dict_0_count.keys())
+word_total_count = len(ordered_words)
+word_index_dict = {word:ordered_words.index(word) for word in ordered_words}
+
+# build skip_gram_output_dict
+skip_gram_output_dict = collections.defaultdict(lambda: np.zeros(word_total_count))
+
+
 # get set
 start_end_set = set(START_LIST+END_LIST)
 
+all_train_text_len = len(all_train_text)
 # count the surround words (length depends) for each word
-for text in all_train_text:
+for j, text in enumerate(all_train_text):
     word_list = nltk.word_tokenize(text)
     word_list = [_process_word(x) for x in word_list]
     word_list = START_LIST + word_list + END_LIST
@@ -90,19 +99,19 @@ for text in all_train_text:
         if word in start_end_set:
             continue
         else:
-            if word not in skip_gram_output_dict:
-                skip_gram_output_dict[word] = collections.OrderedDict(word_dict_0_count.copy())
-
             surrounding_word_list = word_list[i-skip_gram_len:i] + word_list[i:i+skip_gram_len]
             for surrounding_word in surrounding_word_list:
-                skip_gram_output_dict[word][surrounding_word] += 1
+                word_index = word_index_dict[surrounding_word]
+                skip_gram_output_dict[word][word_index] += 1
+
+    print ("text-{}/{} done!".format(j, all_train_text_len))
 
 
 
 # convert values to numpy
-for word, word_dict_0_count in skip_gram_output_dict.items():
+for word, count_array in skip_gram_output_dict.items():
     word_count = int(word_dict_with_count[word])
-    skip_gram_output_dict[word] = np.array(word_dict_0_count.values()) / word_count
+    skip_gram_output_dict[word] = count_array / word_count
 #
 
 pickle.dump(dict(skip_gram_output_dict), open(skip_gram_output_dict_file_path, 'wb'))
