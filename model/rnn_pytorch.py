@@ -4,9 +4,10 @@ import torch.nn as nn
 from torch.autograd import Variable
 
 class RNNPytorch(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size):
+    def __init__(self, input_size, hidden_size, output_size, learning_rate):
         super(RNNPytorch, self).__init__()
 
+        self.learning_rate = learning_rate
         self.hidden_size = hidden_size
 
         self.i2h = nn.Linear(input_size + hidden_size, hidden_size)
@@ -14,7 +15,9 @@ class RNNPytorch(nn.Module):
         self.softmax = nn.LogSoftmax()
 
     def forward(self, input, hidden):
+
         combined = torch.cat((input, hidden), 1)
+
         hidden = self.i2h(combined)
         output = self.i2o(combined)
         output = self.softmax(output)
