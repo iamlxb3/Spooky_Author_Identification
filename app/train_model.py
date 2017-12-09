@@ -119,7 +119,7 @@ for j in range(TEST_HYPER_ITER):
     n_hidden = random.sample(n_hidden_list, 1)[0]
     learning_rate = random.sample(learning_rate_list, 1)[0]
     rnn = build_rnn(n_hidden, learning_rate)
-    temp_loss = 0
+    total_loss = 0
 
     for i in range(MAX_ITER):
         random.seed(i) # set random seed for a fair comparision
@@ -139,11 +139,11 @@ for j in range(TEST_HYPER_ITER):
 
         # train start
         pred_output, loss = train(rnn, actual_output, input)
-        temp_loss += loss
+        total_loss += loss
 
 
-    print ("n_hidden-{}, learning_rate-{}, total_loss: {}".format(n_hidden, learning_rate, temp_loss))
-    hyper_para_test_list.append((temp_loss, n_hidden, learning_rate))
+    print ("n_hidden-{}, learning_rate-{}, total_loss: {}".format(n_hidden, learning_rate, total_loss))
+    hyper_para_test_list.append((total_loss, n_hidden, learning_rate))
 
 print(sorted(hyper_para_test_list, key=lambda x:x[0]))
 
