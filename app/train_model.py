@@ -91,9 +91,14 @@ def evaluate(rnn, line_tensor):
     return output
 # ----------------------------------------------------------------------------------------------------------------------
 
+def _plot(plot_list):
+    plt.plot(plot_list)
+    plt.show()
+    plt.savefig('loss.png')
+
 
 # ----------------------------------------------------------------------------------------------------------------------
-# Train
+# Train - choose the best model
 # ----------------------------------------------------------------------------------------------------------------------
 MAX_ITER = 200
 TEST_HYPER_ITER = 50
@@ -107,19 +112,14 @@ loss_plot_list = []
 
 
 
-def _plot(plot_list):
-    plt.plot(plot_list)
-    plt.show()
-    plt.savefig('loss.png')
-
-
 hyper_para_test_list = []
 
 for j in range(TEST_HYPER_ITER):
+    random.seed(None)
     n_hidden = random.sample(n_hidden_list, 1)[0]
     learning_rate = random.sample(learning_rate_list, 1)[0]
     rnn = build_rnn(n_hidden, learning_rate)
-    total_loss = 0
+    temp_loss = 0
 
     for i in range(MAX_ITER):
         random.seed(i) # set random seed for a fair comparision
@@ -139,11 +139,11 @@ for j in range(TEST_HYPER_ITER):
 
         # train start
         pred_output, loss = train(rnn, actual_output, input)
-        total_loss += loss
+        temp_loss += loss
 
 
-    print ("n_hidden-{}, learning_rate-{}, total_loss: {}".format(n_hidden, learning_rate, i, loss))
-    hyper_para_test_list.append((total_loss, n_hidden, learning_rate))
+    print ("n_hidden-{}, learning_rate-{}, total_loss: {}".format(n_hidden, learning_rate, temp_loss))
+    hyper_para_test_list.append((temp_loss, n_hidden, learning_rate))
 
 print(sorted(hyper_para_test_list, key=lambda x:x[0]))
 
@@ -155,6 +155,54 @@ print(sorted(hyper_para_test_list, key=lambda x:x[0]))
     # print (input)
     # sys.exit()
 # ----------------------------------------------------------------------------------------------------------------------
+
+
+# # ----------------------------------------------------------------------------------------------------------------------
+# # Train
+# # ----------------------------------------------------------------------------------------------------------------------
+# MAX_ITER = 25000
+#
+#
+# print_every = 20
+# loss_plot_list = []
+#
+#
+#
+# n_hidden = 100
+# learning_rate = 0.1
+# rnn = build_rnn(n_hidden, learning_rate)
+# temp_loss = 0
+#
+# for i in range(MAX_ITER):
+#     random.seed(i) # set random seed for a fair comparision
+#     train_sample_path = random.sample(train_sentence_id_paths, 1)[0]
+#     f = pickle.load(open(train_sample_path, 'rb'))
+#     # output
+#     output, _, words_in_sequence = f
+#     #output = list(output).index(1) # convert np.array([1,0,0] to 1
+#     actual_output = torch.autograd.Variable(torch.LongTensor([output]))
+#     # one-hot-vector-in-sequence
+#     input = torch.from_numpy(words_in_sequence)
+#     input = input.view(input.size()[0], 1, -1)
+#     input = input.type(torch.FloatTensor)
+#     input = torch.autograd.Variable(input)
+#     #print(input)
+#     #sys.exit()
+#
+#     # train start
+#     pred_output, loss = train(rnn, actual_output, input)
+#     temp_loss += loss
+#
+#     if i == print_every:
+#         loss_plot_list.append(temp_loss)
+#         temp_loss = 0
+#
+#
+# _plot(loss_plot_list)
+#
+# pickle.dump(rnn, open(os.path.join(top_dir,'trained_model', 'rnn'), 'wb'))
+# # ----------------------------------------------------------------------------------------------------------------------
+
 
 
 
