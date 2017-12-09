@@ -53,9 +53,10 @@ for i, (index, row) in enumerate(train_df.iterrows()):
     author = row['author']
 
     # map author to vector
-    output = np.zeros(3, dtype=np.uint8)
+    #output = np.zeros(3, dtype=np.uint8)
     author_index = AUTHORS.index(author)
-    output[author_index] = 1.0
+    #output[author_index] = 1.0
+    output = author_index
     #
 
     #
@@ -71,20 +72,29 @@ for i, (index, row) in enumerate(train_df.iterrows()):
     for word in word_list:
         # summed word vector
         word_vector = skip_gram_output_dict[word]
+        #word_vector = word_vector.astype(np.uint16)
         summed_words_vector += word_vector
         # sequence word vector
         word_vector_list.append(word_vector)
-        # one-hot word vector
-        one_hot_vector = np.zeros(word_total_num, dtype=np.uint8)
-        one_hot_word_index = word_index_dict[word]
-        one_hot_vector[one_hot_word_index] = 1
-        summed_word_one_hot_vector += one_hot_vector
-        # one hot sequence
-        word_one_hot_vector_list.append(one_hot_vector)
+
+        # # one-hot word vector
+        # one_hot_vector = np.zeros(word_total_num, dtype=np.uint8)
+        # one_hot_word_index = word_index_dict[word]
+        # one_hot_vector[one_hot_word_index] = 1
+        # summed_word_one_hot_vector += one_hot_vector
+        # # one hot sequence
+        # word_one_hot_vector_list.append(one_hot_vector)
 
 
     words_vector_in_sequence = np.array(word_vector_list)
-    words_one_hot_vector_in_sequence = np.array(word_one_hot_vector_list, dtype=np.uint8)
+
+    #words_one_hot_vector_in_sequence = np.array(word_one_hot_vector_list, dtype=np.uint8)
+
+    # cast type
+    summed_words_vector = summed_words_vector.astype(np.int32)
+    words_vector_in_sequence = words_vector_in_sequence.astype(np.int32)
+    #
+
 
     # print (word_list)
     # print (output)
@@ -95,7 +105,7 @@ for i, (index, row) in enumerate(train_df.iterrows()):
 
     #data_tuple = (id, word_list, output, summed_word_one_hot_vector, words_one_hot_vector_in_sequence,
     #                      summed_words_vector, words_vector_in_sequence)
-    data_tuple = (output, summed_word_one_hot_vector, words_one_hot_vector_in_sequence)
+    data_tuple = (output, summed_words_vector, words_vector_in_sequence)
 
     output_path = os.path.join(all_data_in_numpy_dir, id)
     pickle.dump(data_tuple, open(output_path, 'wb'))

@@ -18,7 +18,7 @@ sys.path.append(top_dir)
 from model.rnn_pytorch import RNNPytorch
 
 data_dir = os.path.join(top_dir, 'data')
-all_data_in_numpy_dir = os.path.join(data_dir, 'all_data_in_numpy')
+all_data_in_numpy_dir = os.path.join(data_dir, 'all_data_in_numpy_one_hot')
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -36,15 +36,12 @@ validation_sentence_id_paths = (os.path.join(all_data_in_numpy_dir, x) for x in 
 # ----------------------------------------------------------------------------------------------------------------------
 # build RNN
 # ----------------------------------------------------------------------------------------------------------------------
+n_hidden = 20
+input_size = 22453
+output_size = 3
+learning_rate = 0.005
+rnn = RNNPytorch(input_size, n_hidden, output_size, learning_rate)
 Loss = nn.NLLLoss()
-
-def build_rnn(n_hidden, learning_rate):
-    #n_hidden = 20
-    input_size = 22459
-    output_size = 3
-    #learning_rate = 0.005
-    rnn = RNNPytorch(input_size, n_hidden, output_size, learning_rate)
-    return rnn
 # ----------------------------------------------------------------------------------------------------------------------
 
 
@@ -95,61 +92,44 @@ def evaluate(rnn, line_tensor):
 # ----------------------------------------------------------------------------------------------------------------------
 # Train
 # ----------------------------------------------------------------------------------------------------------------------
-MAX_ITER = 200
-TEST_HYPER_ITER = 50
+MAX_ITER = 25000
 
-# hyper-parameters of rnn
-n_hidden_list = [x for x in range(20,500)]
-learning_rate_list = [random.uniform(0.0001, 0.1) for x in range(500)]
-
-print_every = 20
+current_loss = 0
+print_every = 40
 loss_plot_list = []
-
-
 
 def _plot(plot_list):
     plt.plot(plot_list)
     plt.show()
     plt.savefig('loss.png')
 
-
-hyper_para_test_list = []
-
-for j in range(TEST_HYPER_ITER):
-    n_hidden = random.sample(n_hidden_list, 1)[0]
-    learning_rate = random.sample(learning_rate_list, 1)[0]
-    rnn = build_rnn(n_hidden, learning_rate)
-    total_loss = 0
-
-    for i in range(MAX_ITER):
-        random.seed(i) # set random seed for a fair comparision
-        train_sample_path = random.sample(train_sentence_id_paths, 1)[0]
-        f = pickle.load(open(train_sample_path, 'rb'))
-        # output
-        output, _, words_in_sequence = f
-        #output = list(output).index(1) # convert np.array([1,0,0] to 1
-        actual_output = torch.autograd.Variable(torch.LongTensor([output]))
-        # one-hot-vector-in-sequence
-        input = torch.from_numpy(words_in_sequence)
-        input = input.view(input.size()[0], 1, -1)
-        input = input.type(torch.FloatTensor)
-        input = torch.autograd.Variable(input)
-        #print(input)
-        #sys.exit()
-
-        # train start
-        pred_output, loss = train(rnn, actual_output, input)
-        total_loss += loss
+for i in range(MAX_ITER):
+    train_sample_path = random.sample(train_sentence_id_paths, 1)[0]
+    f = pickle.load(open(train_sample_path, 'rb'))
+    # output
+    output, summed_word_one_hot_vector, words_one_hot_vector_in_sequence = f
+    output = list(output).index(1) # convert np.array([1,0,0] to 1
+    actual_output = torch.autograd.Variable(torch.LongTensor([output]))
+    # one-hot-vector-in-sequence
+    input = torch.from_numpy(words_one_hot_vector_in_sequence)
+    input = input.view(input.size()[0], 1, -1)
+    input = input.type(torch.FloatTensor)
+    input = torch.autograd.Variable(input)
 
 
-    print ("n_hidden-{}, learning_rate-{}, total_loss: {}".format(n_hidden, learning_rate, i, loss))
-    hyper_para_test_list.append((total_loss, n_hidden, learning_rate))
+    # train start
+    pred_output, loss = train(rnn, actual_output, input)
+    current_loss += loss
 
-print(sorted(hyper_para_test_list, key=lambda x:x[0]))
+    if i!= 0 and i % print_every == 0:
+        print ("iter-{}, current_loss: {}".format(i, current_loss))
+        loss_plot_list.append(current_loss)
+        current_loss = 0
 
-#_plot(loss_plot_list)
 
-#pickle.dump(rnn, open(os.path.join(top_dir,'trained_model', 'rnn'), 'wb'))
+_plot(loss_plot_list)
+
+pickle.dump(rnn, open(os.path.join(top_dir,'trained_model', 'rnn_one_hot'), 'wb'))
 
     # print (actual_output)
     # print (input)
@@ -158,47 +138,47 @@ print(sorted(hyper_para_test_list, key=lambda x:x[0]))
 
 
 
-# # ----------------------------------------------------------------------------------------------------------------------
-# # Validation
-# # ----------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
+# Validation
+# ----------------------------------------------------------------------------------------------------------------------
+
+# load rnn
+rnn = pickle.load(open(os.path.join(top_dir,'trained_model','rnn_one_hot'), 'rb'))
 #
-# # load rnn
-# rnn = pickle.load(open(os.path.join(top_dir,'trained_model','rnn'), 'rb'))
-# #
-#
-# pred_label_list = []
-# actual_label_list = []
-#
-# for i, id_path in enumerate(validation_sentence_id_paths):
-#     sample_path = random.sample(train_sentence_id_paths, 1)[0]
-#     f = pickle.load(open(sample_path, 'rb'))
-#
-#     # output
-#     output, summed_word_one_hot_vector, words_in_sequence = f
-#     output = list(output).index(1) # convert np.array([1,0,0] to 1
-#     actual_output = torch.autograd.Variable(torch.LongTensor([output]))
-#
-#     # one-hot-vector-in-sequence
-#     input = torch.from_numpy(words_in_sequence)
-#     input = input.view(input.size()[0], 1, -1)
-#     input = input.type(torch.FloatTensor)
-#     input = torch.autograd.Variable(input)
-#
-#     pred_output = evaluate(rnn, input)
-#     pred_output = pred_output[0].max(0)[1].data[0]
-#
-#     pred_label_list.append(pred_output)
-#     actual_label_list.append(output)
-#
-#     if i % 20 == 0:
-#         print ("validation-sample-{}".format(i))
-#
-#
-#
-# accuracy = accuracy_score(actual_label_list, pred_label_list)
-# print ("Accuracy: {}".format(accuracy))
-# print (collections.Counter(pred_label_list))
-# # ----------------------------------------------------------------------------------------------------------------------
+
+pred_label_list = []
+actual_label_list = []
+
+for i, id_path in enumerate(validation_sentence_id_paths):
+    sample_path = random.sample(train_sentence_id_paths, 1)[0]
+    f = pickle.load(open(sample_path, 'rb'))
+
+    # output
+    output, summed_word_one_hot_vector, words_one_hot_vector_in_sequence = f
+    output = list(output).index(1) # convert np.array([1,0,0] to 1
+    actual_output = torch.autograd.Variable(torch.LongTensor([output]))
+
+    # one-hot-vector-in-sequence
+    input = torch.from_numpy(words_one_hot_vector_in_sequence)
+    input = input.view(input.size()[0], 1, -1)
+    input = input.type(torch.FloatTensor)
+    input = torch.autograd.Variable(input)
+
+    pred_output = evaluate(rnn, input)
+    pred_output = pred_output[0].max(0)[1].data[0]
+
+    pred_label_list.append(pred_output)
+    actual_label_list.append(output)
+
+    if i % 20 == 0:
+        print ("validation-sample-{}".format(i))
+
+
+
+accuracy = accuracy_score(actual_label_list, pred_label_list)
+print ("Accuracy: {}".format(accuracy))
+print (collections.Counter(pred_label_list))
+# ----------------------------------------------------------------------------------------------------------------------
 
 
 

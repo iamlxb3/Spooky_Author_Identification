@@ -26,7 +26,7 @@ class RNNPytorch(nn.Module):
     def get_output(self, input, hidden):
         combined = self._combine_input_hidden(input, hidden)
         hidden = torch.nn.functional.relu(self.i2h(combined))
-        output = torch.nn.functional.relu(self.h2o(hidden))
+        output = self.h2o(hidden)
         output = self.softmax(output)
         return output
 
