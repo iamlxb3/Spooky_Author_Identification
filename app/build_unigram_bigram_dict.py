@@ -17,13 +17,20 @@ from other_funcs.nltk_funcs import lemmatize_word, tokenize_word, generate_bigra
 
 
 data_dir = os.path.join(top_dir, 'data')
-train_data_path = os.path.join(data_dir, 'train_1.csv')
+
+
+
+is_validation = False
+
+
+if is_validation:
+    train_data_path = os.path.join(data_dir, 'train_1.csv')
+    language_dict_path = os.path.join(data_dir, 'language_dict_validation')
+else:
+    train_data_path = os.path.join(data_dir, 'train.csv')
+    language_dict_path = os.path.join(data_dir, 'language_dict')
 
 train_df = pd.read_csv(train_data_path)
-
-
-
-
 
 
 # get the train unigram and bigram dict
@@ -43,7 +50,7 @@ for index, row in train_df.iterrows():
 
 for author, all_train_words in all_train_words_dict.items():
     train_unigram_dict = collections.Counter(all_train_words)
-    pickle.dump(train_unigram_dict, open(os.path.join(data_dir, 'language_dict', 'train_unigram_dict_{}'.
+    pickle.dump(train_unigram_dict, open(os.path.join(language_dict_path, 'train_unigram_dict_{}'.
                                                       format(author)), 'wb'))
     print ('Save author-{} unigram done!'.format(author))
 #
@@ -64,6 +71,6 @@ for index, row in train_df.iterrows():
 for author, all_train_phrases in all_train_phrases_dict.items():
     all_train_phrases_dict = collections.Counter(all_train_phrases)
     #print (sorted(all_train_phrases_dict.items(), key=lambda x:x[1]))
-    pickle.dump(all_train_phrases_dict, open(os.path.join(data_dir, 'language_dict', 'train_bigram_dict_{}'.format(author)), 'wb'))
+    pickle.dump(all_train_phrases_dict, open(os.path.join(language_dict_path, 'train_bigram_dict_{}'.format(author)), 'wb'))
     print ('Save author-{} bigram done!'.format(author))
 #

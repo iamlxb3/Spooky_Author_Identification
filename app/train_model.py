@@ -97,156 +97,157 @@ def _plot(plot_list):
     plt.savefig('loss.png')
 
 
-# ----------------------------------------------------------------------------------------------------------------------
-# Train - choose the best model
-# ----------------------------------------------------------------------------------------------------------------------
-MAX_ITER = 200
-TEST_HYPER_ITER = 50
-
-# hyper-parameters of rnn
-n_hidden_list = [x for x in range(20,500)]
-learning_rate_list = [random.uniform(0.0001, 0.1) for x in range(500)]
-
-print_every = 20
-loss_plot_list = []
-
-
-
-hyper_para_test_list = []
-
-for j in range(TEST_HYPER_ITER):
-    random.seed(None)
-    n_hidden = random.sample(n_hidden_list, 1)[0]
-    learning_rate = random.sample(learning_rate_list, 1)[0]
-    rnn = build_rnn(n_hidden, learning_rate)
-    total_loss = 0
-
-    for i in range(MAX_ITER):
-        random.seed(i) # set random seed for a fair comparision
-        train_sample_path = random.sample(train_sentence_id_paths, 1)[0]
-        f = pickle.load(open(train_sample_path, 'rb'))
-        # output
-        output, _, words_in_sequence = f
-        #output = list(output).index(1) # convert np.array([1,0,0] to 1
-        actual_output = torch.autograd.Variable(torch.LongTensor([output]))
-        # one-hot-vector-in-sequence
-        input = torch.from_numpy(words_in_sequence)
-        input = input.view(input.size()[0], 1, -1)
-        input = input.type(torch.FloatTensor)
-        input = torch.autograd.Variable(input)
-        #print(input)
-        #sys.exit()
-
-        # train start
-        pred_output, loss = train(rnn, actual_output, input)
-        total_loss += loss
-
-
-    print ("n_hidden-{}, learning_rate-{}, total_loss: {}".format(n_hidden, learning_rate, total_loss))
-    hyper_para_test_list.append((total_loss, n_hidden, learning_rate))
-
-print(sorted(hyper_para_test_list, key=lambda x:x[0]))
-
-#_plot(loss_plot_list)
-
-#pickle.dump(rnn, open(os.path.join(top_dir,'trained_model', 'rnn'), 'wb'))
-
-    # print (actual_output)
-    # print (input)
-    # sys.exit()
-# ----------------------------------------------------------------------------------------------------------------------
-
-
 # # ----------------------------------------------------------------------------------------------------------------------
-# # Train
+# # Train - choose the best model
 # # ----------------------------------------------------------------------------------------------------------------------
-# MAX_ITER = 25000
+# MAX_ITER = 200
+# TEST_HYPER_ITER = 50
 #
+# # hyper-parameters of rnn
+# n_hidden_list = [x for x in range(20,500)]
+# learning_rate_list = [random.uniform(0.0001, 0.1) for x in range(500)]
 #
 # print_every = 20
 # loss_plot_list = []
 #
 #
 #
-# n_hidden = 100
-# learning_rate = 0.1
-# rnn = build_rnn(n_hidden, learning_rate)
-# temp_loss = 0
+# hyper_para_test_list = []
 #
-# for i in range(MAX_ITER):
-#     random.seed(i) # set random seed for a fair comparision
-#     train_sample_path = random.sample(train_sentence_id_paths, 1)[0]
-#     f = pickle.load(open(train_sample_path, 'rb'))
-#     # output
-#     output, _, words_in_sequence = f
-#     #output = list(output).index(1) # convert np.array([1,0,0] to 1
-#     actual_output = torch.autograd.Variable(torch.LongTensor([output]))
-#     # one-hot-vector-in-sequence
-#     input = torch.from_numpy(words_in_sequence)
-#     input = input.view(input.size()[0], 1, -1)
-#     input = input.type(torch.FloatTensor)
-#     input = torch.autograd.Variable(input)
-#     #print(input)
-#     #sys.exit()
+# for j in range(TEST_HYPER_ITER):
+#     random.seed(None)
+#     n_hidden = random.sample(n_hidden_list, 1)[0]
+#     learning_rate = random.sample(learning_rate_list, 1)[0]
+#     rnn = build_rnn(n_hidden, learning_rate)
+#     total_loss = 0
 #
-#     # train start
-#     pred_output, loss = train(rnn, actual_output, input)
-#     temp_loss += loss
+#     for i in range(MAX_ITER):
+#         random.seed(i) # set random seed for a fair comparision
+#         train_sample_path = random.sample(train_sentence_id_paths, 1)[0]
+#         f = pickle.load(open(train_sample_path, 'rb'))
+#         # output
+#         output, _, words_in_sequence = f
+#         #output = list(output).index(1) # convert np.array([1,0,0] to 1
+#         actual_output = torch.autograd.Variable(torch.LongTensor([output]))
+#         # one-hot-vector-in-sequence
+#         input = torch.from_numpy(words_in_sequence)
+#         input = input.view(input.size()[0], 1, -1)
+#         input = input.type(torch.FloatTensor)
+#         input = torch.autograd.Variable(input)
+#         #print(input)
+#         #sys.exit()
 #
-#     if i == print_every:
-#         loss_plot_list.append(temp_loss)
-#         temp_loss = 0
+#         # train start
+#         pred_output, loss = train(rnn, actual_output, input)
+#         total_loss += loss
 #
 #
-# _plot(loss_plot_list)
+#     print ("n_hidden-{}, learning_rate-{}, total_loss: {}".format(n_hidden, learning_rate, total_loss))
+#     hyper_para_test_list.append((total_loss, n_hidden, learning_rate))
 #
-# pickle.dump(rnn, open(os.path.join(top_dir,'trained_model', 'rnn'), 'wb'))
+# print(sorted(hyper_para_test_list, key=lambda x:x[0]))
+#
+# #_plot(loss_plot_list)
+#
+# #pickle.dump(rnn, open(os.path.join(top_dir,'trained_model', 'rnn'), 'wb'))
+#
+#     # print (actual_output)
+#     # print (input)
+#     # sys.exit()
 # # ----------------------------------------------------------------------------------------------------------------------
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Train
+# ----------------------------------------------------------------------------------------------------------------------
+MAX_ITER = 25000
+
+
+print_every = 20
+loss_plot_list = []
+
+
+
+n_hidden = 100
+learning_rate = 0.0001
+rnn = build_rnn(n_hidden, learning_rate)
+temp_loss = 0
+
+for i in range(MAX_ITER):
+    random.seed(i) # set random seed for a fair comparision
+    train_sample_path = random.sample(train_sentence_id_paths, 1)[0]
+    f = pickle.load(open(train_sample_path, 'rb'))
+    # output
+    output, _, words_in_sequence = f
+    #output = list(output).index(1) # convert np.array([1,0,0] to 1
+    actual_output = torch.autograd.Variable(torch.LongTensor([output]))
+    # one-hot-vector-in-sequence
+    input = torch.from_numpy(words_in_sequence)
+    input = input.view(input.size()[0], 1, -1)
+    input = input.type(torch.FloatTensor)
+    input = torch.autograd.Variable(input)
+    #print(input)
+    #sys.exit()
+
+    # train start
+    pred_output, loss = train(rnn, actual_output, input)
+    temp_loss += loss
+
+    if i % print_every == 0:
+        print ("temp_loss: ", temp_loss)
+        loss_plot_list.append(temp_loss)
+        temp_loss = 0
+
+
+_plot(loss_plot_list)
+
+pickle.dump(rnn, open(os.path.join(top_dir,'trained_model', 'rnn'), 'wb'))
+# ----------------------------------------------------------------------------------------------------------------------
 
 
 
 
-# # ----------------------------------------------------------------------------------------------------------------------
-# # Validation
-# # ----------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
+# Validation
+# ----------------------------------------------------------------------------------------------------------------------
+
+# load rnn
+rnn = pickle.load(open(os.path.join(top_dir,'trained_model','rnn'), 'rb'))
 #
-# # load rnn
-# rnn = pickle.load(open(os.path.join(top_dir,'trained_model','rnn'), 'rb'))
-# #
-#
-# pred_label_list = []
-# actual_label_list = []
-#
-# for i, id_path in enumerate(validation_sentence_id_paths):
-#     sample_path = random.sample(train_sentence_id_paths, 1)[0]
-#     f = pickle.load(open(sample_path, 'rb'))
-#
-#     # output
-#     output, summed_word_one_hot_vector, words_in_sequence = f
-#     output = list(output).index(1) # convert np.array([1,0,0] to 1
-#     actual_output = torch.autograd.Variable(torch.LongTensor([output]))
-#
-#     # one-hot-vector-in-sequence
-#     input = torch.from_numpy(words_in_sequence)
-#     input = input.view(input.size()[0], 1, -1)
-#     input = input.type(torch.FloatTensor)
-#     input = torch.autograd.Variable(input)
-#
-#     pred_output = evaluate(rnn, input)
-#     pred_output = pred_output[0].max(0)[1].data[0]
-#
-#     pred_label_list.append(pred_output)
-#     actual_label_list.append(output)
-#
-#     if i % 20 == 0:
-#         print ("validation-sample-{}".format(i))
-#
-#
-#
-# accuracy = accuracy_score(actual_label_list, pred_label_list)
-# print ("Accuracy: {}".format(accuracy))
-# print (collections.Counter(pred_label_list))
-# # ----------------------------------------------------------------------------------------------------------------------
+
+pred_label_list = []
+actual_label_list = []
+
+for i, id_path in enumerate(validation_sentence_id_paths):
+    sample_path = random.sample(train_sentence_id_paths, 1)[0]
+    f = pickle.load(open(sample_path, 'rb'))
+
+    # output
+    output, summed_word_one_hot_vector, words_in_sequence = f
+    output = list(output).index(1) # convert np.array([1,0,0] to 1
+    actual_output = torch.autograd.Variable(torch.LongTensor([output]))
+
+    # one-hot-vector-in-sequence
+    input = torch.from_numpy(words_in_sequence)
+    input = input.view(input.size()[0], 1, -1)
+    input = input.type(torch.FloatTensor)
+    input = torch.autograd.Variable(input)
+
+    pred_output = evaluate(rnn, input)
+    pred_output = pred_output[0].max(0)[1].data[0]
+
+    pred_label_list.append(pred_output)
+    actual_label_list.append(output)
+
+    if i % 20 == 0:
+        print ("validation-sample-{}".format(i))
+
+
+
+accuracy = accuracy_score(actual_label_list, pred_label_list)
+print ("Accuracy: {}".format(accuracy))
+print (collections.Counter(pred_label_list))
+# ----------------------------------------------------------------------------------------------------------------------
 
 
 

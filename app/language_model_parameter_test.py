@@ -22,7 +22,7 @@ sys.path.append(top_dir)
 from other_funcs.nltk_funcs import lemmatize_word, tokenize_word, generate_bigrams
 
 
-IsValidation = False
+IsValidation = True
 
 if IsValidation:
     language_dict_dir = os.path.join(data_dir, 'language_dict_validation')
@@ -57,7 +57,6 @@ validation_df = pd.read_csv(validation_data_path)
 EAP_unigram_dict = pickle.load(open(EAP_unigram_dict_path, 'rb'))
 HPL_unigram_dict = pickle.load(open(HPL_unigram_dict_path, 'rb'))
 MWS_unigram_dict = pickle.load(open(MWS_unigram_dict_path, 'rb'))
-
 EAP_word_total = sum(EAP_unigram_dict.values())
 HPL_word_total = sum(HPL_unigram_dict.values())
 MWS_word_total = sum(MWS_unigram_dict.values())
@@ -70,7 +69,6 @@ MWS_V = len(MWS_unigram_dict.keys())
 EAP_bigram_dict = pickle.load(open(EAP_bigram_dict_path, 'rb'))
 HPL_bigram_dict = pickle.load(open(HPL_bigram_dict_path, 'rb'))
 MWS_bigram_dict = pickle.load(open(MWS_bigram_dict_path, 'rb'))
-
 EAP_bigram_total = sum(EAP_bigram_dict.values())
 HPL_bigram_total = sum(HPL_bigram_dict.values())
 MWS_bigram_total = sum(MWS_bigram_dict.values())
@@ -200,10 +198,13 @@ def _process_word(word):
 # ----------------------------------------------------------------------------------------------------------------------
 # stupid back-off bigram model
 # ----------------------------------------------------------------------------------------------------------------------
-BACK_OFF_PARAMETER = 1.4503
+BACK_OFF_PARAMETER = 2.0
+random.seed(0)
+BACK_OFF_PARAMETER_LIST = [random.uniform(0.2,5) for x in range(50)]
+accuracy_list = []
+random.seed(None)
 
-def bigram_stupid_backoff(df, back_off=0.4):
-
+for BACK_OFF_PARAMETER in BACK_OFF_PARAMETER_LIST:
     actual_author_list = []
     pred_author_list = []
 
@@ -262,14 +263,14 @@ def bigram_stupid_backoff(df, back_off=0.4):
 
     if IsValidation:
         accuracy = accuracy_score(actual_author_list, pred_author_list)
+        accuracy_list.append(accuracy)
         print (collections.Counter(pred_author_list))
         print ("back-off bigram accuracy: ", accuracy)
-        return accuracy
     else:
         submission_df = pd.DataFrame(submission_dict, columns = ['id', 'EAP', 'HPL', 'MWS'])
         submission_df.to_csv(os.path.join(top_dir, 'submission', 'submission.csv'), index=False)
 
-
+print (sorted(list(zip(accuracy_list, BACK_OFF_PARAMETER_LIST)), key=lambda x:x[0]))
 
 
 
@@ -281,8 +282,3 @@ def bigram_stupid_backoff(df, back_off=0.4):
 # ----------------------------------------------------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------------------------------------------------
-
-
-# run
-
-bigram_stupid_backoff()
