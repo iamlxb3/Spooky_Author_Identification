@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14744d81-bac9-4cd7-87ad-024f9a2c7f7b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/language_model_parameter_test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/skip_gram_output_dict" afterPath="$PROJECT_DIR$/data/skip_gram_output_dict" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build_unigram_bigram_dict.py" afterPath="$PROJECT_DIR$/app/build_unigram_bigram_dict.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/train_model.py" afterPath="$PROJECT_DIR$/app/train_model.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/language_model_parameter_test.py" afterPath="$PROJECT_DIR$/app/language_model_parameter_test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/validation_with_language_model.py" afterPath="$PROJECT_DIR$/app/validation_with_language_model.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/other_funcs/nltk_funcs.py" afterPath="$PROJECT_DIR$/other_funcs/nltk_funcs.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/build_unigram_bigram_dict.py" afterPath="$PROJECT_DIR$/app/build_unigram_bigram_trigram_dict.py" />
     </list>
     <ignored path="data/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="build_unigram_bigram_dict.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/build_unigram_bigram_dict.py">
+      <file leaf-file-name="build_unigram_bigram_trigram_dict.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/build_unigram_bigram_trigram_dict.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-115">
-              <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+            <state relative-caret-position="851">
+              <caret line="80" column="38" lean-forward="false" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -31,11 +31,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="validation_with_language_model.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="validation_with_language_model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/validation_with_language_model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="966">
-              <caret line="46" column="58" lean-forward="false" selection-start-line="46" selection-start-column="51" selection-end-line="46" selection-end-column="58" />
+            <state relative-caret-position="288">
+              <caret line="362" column="31" lean-forward="false" selection-start-line="362" selection-start-column="31" selection-end-line="362" selection-end-column="31" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -43,7 +43,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_model.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="nltk_funcs.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/other_funcs/nltk_funcs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="525">
+              <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#47#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_model.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/train_model.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="693">
@@ -58,7 +70,7 @@
       <file leaf-file-name="language_model_parameter_test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/language_model_parameter_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
+            <state relative-caret-position="4200">
               <caret line="212" column="31" lean-forward="false" selection-start-line="212" selection-start-column="18" selection-end-line="212" selection-end-column="31" />
               <folding />
             </state>
@@ -69,7 +81,7 @@
         <entry file="file://$PROJECT_DIR$/submission/submission.csv">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120456">
-              <caret line="5736" column="55" lean-forward="true" selection-start-line="5736" selection-start-column="55" selection-end-line="5736" selection-end-column="55" />
+              <caret line="5736" column="55" lean-forward="false" selection-start-line="5736" selection-start-column="55" selection-end-line="5736" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -78,8 +90,8 @@
       <file leaf-file-name="sample_submission.csv" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/sample_submission.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-175009">
-              <caret line="4" column="63" lean-forward="true" selection-start-line="4" selection-start-column="63" selection-end-line="4" selection-end-column="63" />
+            <state relative-caret-position="84">
+              <caret line="4" column="63" lean-forward="false" selection-start-line="4" selection-start-column="63" selection-end-line="4" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -122,11 +134,11 @@
         <option value="$PROJECT_DIR$/model/rnn_pytorch.py" />
         <option value="$PROJECT_DIR$/app/prepare_train_test_data.py" />
         <option value="$PROJECT_DIR$/app/train_model_one_hot.py" />
+        <option value="$PROJECT_DIR$/app/language_model_parameter_test.py" />
+        <option value="$PROJECT_DIR$/app/train_model.py" />
         <option value="$PROJECT_DIR$/other_funcs/nltk_funcs.py" />
         <option value="$PROJECT_DIR$/app/build_unigram_bigram_dict.py" />
-        <option value="$PROJECT_DIR$/app/language_model_parameter_test.py" />
         <option value="$PROJECT_DIR$/app/validation_with_language_model.py" />
-        <option value="$PROJECT_DIR$/app/train_model.py" />
       </list>
     </option>
   </component>
@@ -151,8 +163,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -173,7 +185,8 @@
             <path>
               <item name="Spooky_Author_Identification" type="b2602c69:ProjectViewProjectNode" />
               <item name="Spooky_Author_Identification" type="462c0819:PsiDirectoryNode" />
-              <item name="other_funcs" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="language_dict_validation" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Spooky_Author_Identification" type="b2602c69:ProjectViewProjectNode" />
@@ -215,6 +228,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="14744d81-bac9-4cd7-87ad-024f9a2c7f7b" name="Default" comment="" />
@@ -232,6 +248,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24895833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -245,7 +262,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -259,7 +275,69 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/build_unigram_bigram_dict.py">
+    <entry file="file://$PROJECT_DIR$/app/build_unigram_bigram_trigram_dict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/validation_with_language_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="46" column="58" lean-forward="false" selection-start-line="46" selection-start-column="51" selection-end-line="46" selection-end-column="58" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/language_model_parameter_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4200">
+          <caret line="212" column="31" lean-forward="false" selection-start-line="212" selection-start-column="18" selection-end-line="212" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/submission/submission.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120456">
+          <caret line="5736" column="55" lean-forward="true" selection-start-line="5736" selection-start-column="55" selection-end-line="5736" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/sample_submission.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="63" lean-forward="true" selection-start-line="4" selection-start-column="63" selection-end-line="4" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/test.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/train_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3885">
+          <caret line="195" column="27" lean-forward="false" selection-start-line="195" selection-start-column="27" selection-end-line="195" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build_unigram_bigram_trigram_dict.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
           <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
@@ -279,7 +357,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build_unigram_bigram_dict.py">
+    <entry file="file://$PROJECT_DIR$/app/build_unigram_bigram_trigram_dict.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -481,16 +559,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/other_funcs/nltk_funcs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="22" column="23" lean-forward="false" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#47#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/test.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -501,8 +569,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/sample_submission.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-175009">
-          <caret line="4" column="63" lean-forward="true" selection-start-line="4" selection-start-column="63" selection-end-line="4" selection-end-column="63" />
+        <state relative-caret-position="84">
+          <caret line="4" column="63" lean-forward="false" selection-start-line="4" selection-start-column="63" selection-end-line="4" selection-end-column="63" />
           <folding />
         </state>
       </provider>
@@ -510,36 +578,16 @@
     <entry file="file://$PROJECT_DIR$/submission/submission.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120456">
-          <caret line="5736" column="55" lean-forward="true" selection-start-line="5736" selection-start-column="55" selection-end-line="5736" selection-end-column="55" />
+          <caret line="5736" column="55" lean-forward="false" selection-start-line="5736" selection-start-column="55" selection-end-line="5736" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/language_model_parameter_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
+        <state relative-caret-position="4200">
           <caret line="212" column="31" lean-forward="false" selection-start-line="212" selection-start-column="18" selection-end-line="212" selection-end-column="31" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build_unigram_bigram_dict.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-115">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/validation_with_language_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="966">
-          <caret line="46" column="58" lean-forward="false" selection-start-line="46" selection-start-column="51" selection-end-line="46" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -547,6 +595,36 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="693">
           <caret line="195" column="27" lean-forward="false" selection-start-line="195" selection-start-column="27" selection-end-line="195" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build_unigram_bigram_trigram_dict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="851">
+          <caret line="80" column="38" lean-forward="false" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/other_funcs/nltk_funcs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/validation_with_language_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="362" column="31" lean-forward="false" selection-start-line="362" selection-start-column="31" selection-end-line="362" selection-end-column="31" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

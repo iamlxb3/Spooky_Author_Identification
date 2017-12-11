@@ -19,7 +19,7 @@ top_dir = os.path.dirname(current_dir)
 data_dir = os.path.join(top_dir, 'data')
 
 sys.path.append(top_dir)
-from other_funcs.nltk_funcs import lemmatize_word, tokenize_word, generate_bigrams
+from other_funcs.nltk_funcs import preprocessing_word, tokenize_word, generate_bigrams
 
 
 IsValidation = True
@@ -153,7 +153,7 @@ def _calculate_bigram_word_score(bigram):
 
 def _process_word(word):
     word = word.lower()
-    word = lemmatize_word(word)
+    word = preprocessing_word(word)
     return word
 # ----------------------------------------------------------------------------------------------------------------------
 
