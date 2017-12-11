@@ -7,6 +7,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 import numpy as np
 import random
+import pandas as pd
 import collections
 import pickle
 
@@ -21,7 +22,7 @@ data_dir = os.path.join(top_dir, 'data')
 from other_funcs.nltk_funcs import preprocessing_word, tokenize_word
 from other_funcs.cv import create_k_fold
 
-IS_READ_FROM_TFIDF = True
+IS_READ_FROM_TFIDF = False
 IS_LDA = False
 print ("IS_READ_FROM_TFIDF: ", IS_READ_FROM_TFIDF)
 
@@ -72,7 +73,7 @@ def learning_rate_generator(N):
 
 def hidden_layer_1_size(N):
     for i in range(N):
-        size = random.randint(20,500)
+        size = random.randint(20,1000)
         yield size
 
 def hidden_layer_2_size(N):
@@ -98,13 +99,17 @@ def max_n_gram(N):
     max_n_gram_list = [1,2,3]
     for i in range(N):
         yield random.sample(max_n_gram_list, 1)[0]
+
 def max_features_generator(N):
     for i in range(N):
         yield random.randint(1000, 10000)
 # ----------------------------------------------------------------------------------------------------------------------
 
 N = 50
-hyper_parameter_list = []
+hyper_parameter_df = []
+hyper_parameter_name_list = ['LDA_n_topics','learning_rate_init','hidden_layer_1_size','hidden_layer_2_size',
+                             'alpha','max_n_gram','early_stopping','validation_fraction','max_features','avg_accuracy']
+
 for generator_tuple in zip(LDA_n_topics(N), learning_rate_generator(N), hidden_layer_1_size(N), hidden_layer_2_size(N),
                            alpha_generator(N), max_n_gram(N), early_stopping_generator(N),
                            validation_fraction_generator(N), max_features_generator(N)):
@@ -208,7 +213,8 @@ for generator_tuple in zip(LDA_n_topics(N), learning_rate_generator(N), hidden_l
 
 
     avg_accuracy = np.average(cv_accuracy_list)
-    hyper_parameter_list.append((avg_accuracy, generator_tuple))
+    hyper_parameter_value_list = list(generator_tuple) + [avg_accuracy]
+    hyper_parameter_df.append(dict(zip(hyper_parameter_name_list, hyper_parameter_value_list)))
 
     print ("------------------------------------")
     print ("generator_tuple: ", generator_tuple)
@@ -219,6 +225,20 @@ for generator_tuple in zip(LDA_n_topics(N), learning_rate_generator(N), hidden_l
     #sys.exit()
 
 
-hyper_parameter_list = sorted(hyper_parameter_list, key=lambda x:x[0], reverse=True)
-print (hyper_parameter_list)
+# LDA_n_topics = generator_tuple[0]
+# learning_rate_init = generator_tuple[1]
+# hidden_layer_1_size = generator_tuple[2]
+# hidden_layer_2_size = generator_tuple[3]
+# alpha = generator_tuple[4]
+# early_stopping = generator_tuple[6]
+# validation_fraction = generator_tuple[7]
+# # tfidf
+# max_n_gram = generator_tuple[5]
+# max_features = generator_tuple[8]
+
+hyper_parameter_df = pd.DataFrame(hyper_parameter_df, columns=hyper_parameter_name_list)
+hyper_parameter_df = hyper_parameter_df.sort_values('avg_accuracy', ascending=False)
+print (hyper_parameter_df)
+hyper_parameter_df.to_csv('hyper_parameter_df.csv', index=False, )
+
 
