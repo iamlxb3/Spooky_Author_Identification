@@ -103,16 +103,23 @@ def max_n_gram(N):
 def max_features_generator(N):
     for i in range(N):
         yield random.randint(1000, 10000)
+
+def token_pattern_generator(N):
+    token_pattern_list = [r"[\w']+|[.,!?;]", r"(?u)\b\w\w+\b"]
+    for i in range(N):
+        yield random.sample(token_pattern_list, 1)[0]
 # ----------------------------------------------------------------------------------------------------------------------
 
 N = 50
 hyper_parameter_df = []
 hyper_parameter_name_list = ['LDA_n_topics','learning_rate_init','hidden_layer_1_size','hidden_layer_2_size',
-                             'alpha','max_n_gram','early_stopping','validation_fraction','max_features','avg_accuracy']
+                             'alpha','max_n_gram','early_stopping','validation_fraction','max_features',
+                             'token_pattern',
+                             'avg_accuracy']
 
 for generator_tuple in zip(LDA_n_topics(N), learning_rate_generator(N), hidden_layer_1_size(N), hidden_layer_2_size(N),
                            alpha_generator(N), max_n_gram(N), early_stopping_generator(N),
-                           validation_fraction_generator(N), max_features_generator(N)):
+                           validation_fraction_generator(N), max_features_generator(N), token_pattern_generator(N)):
     LDA_n_topics = generator_tuple[0]
     learning_rate_init = generator_tuple[1]
     hidden_layer_1_size = generator_tuple[2]
@@ -123,6 +130,7 @@ for generator_tuple in zip(LDA_n_topics(N), learning_rate_generator(N), hidden_l
     # tfidf
     max_n_gram = generator_tuple[5]
     max_features = generator_tuple[8]
+    token_pattern = generator_tuple[9]
 
     # ----------------------------------------------------------------------------------------------------------------------
     # set MLP
@@ -146,7 +154,7 @@ for generator_tuple in zip(LDA_n_topics(N), learning_rate_generator(N), hidden_l
     # ----------------------------------------------------------------------------------------------------------------------
     # TFIDF
     # ----------------------------------------------------------------------------------------------------------------------
-    tf_vectorizer = TfidfVectorizer(ngram_range=(1, max_n_gram), max_features=max_features)
+    tf_vectorizer = TfidfVectorizer(ngram_range=(1, max_n_gram), max_features=max_features, token_pattern=token_pattern)
     # ----------------------------------------------------------------------------------------------------------------------
 
     # CV

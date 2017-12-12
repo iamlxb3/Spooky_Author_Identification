@@ -19,10 +19,10 @@ top_dir = os.path.dirname(current_dir)
 data_dir = os.path.join(top_dir, 'data')
 
 sys.path.append(top_dir)
-from other_funcs.nltk_funcs import preprocessing_word, tokenize_word, generate_bigrams, generate_trigrams
+from other_funcs.nltk_funcs import preprocessing_word, tokenize_word, generate_bigrams, generate_trigrams, add_n_start
 
 
-IsValidation = False
+IsValidation = True
 
 if IsValidation:
     language_dict_dir = os.path.join(data_dir, 'language_dict_validation')
@@ -42,11 +42,11 @@ HPL_bigram_dict_path = os.path.join(language_dict_dir, 'train_bigram_dict_HPL')
 MWS_bigram_dict_path = os.path.join(language_dict_dir, 'train_bigram_dict_MWS')
 #
 
-# # trigram
-# EAP_trigram_dict_path = os.path.join(language_dict_dir, 'train_trigram_dict_EAP')
-# HPL_trigram_dict_path = os.path.join(language_dict_dir, 'train_trigram_dict_HPL')
-# MWS_trigram_dict_path = os.path.join(language_dict_dir, 'train_trigram_dict_MWS')
-# #
+# trigram
+EAP_trigram_dict_path = os.path.join(language_dict_dir, 'train_trigram_dict_EAP')
+HPL_trigram_dict_path = os.path.join(language_dict_dir, 'train_trigram_dict_HPL')
+MWS_trigram_dict_path = os.path.join(language_dict_dir, 'train_trigram_dict_MWS')
+#
 
 
 
@@ -84,22 +84,22 @@ HPL_bigram_total = sum(HPL_bigram_dict.values())
 MWS_bigram_total = sum(MWS_bigram_dict.values())
 #
 
-# # trigram
-# EAP_trigram_dict = pickle.load(open(EAP_trigram_dict_path, 'rb'))
-# HPL_trigram_dict = pickle.load(open(HPL_trigram_dict_path, 'rb'))
-# MWS_trigram_dict = pickle.load(open(MWS_trigram_dict_path, 'rb'))
+# trigram
+EAP_trigram_dict = pickle.load(open(EAP_trigram_dict_path, 'rb'))
+HPL_trigram_dict = pickle.load(open(HPL_trigram_dict_path, 'rb'))
+MWS_trigram_dict = pickle.load(open(MWS_trigram_dict_path, 'rb'))
+
+
+EAP_trigram_total = sum(EAP_trigram_dict.values())
+HPL_trigram_total = sum(HPL_trigram_dict.values())
+MWS_trigram_total = sum(MWS_trigram_dict.values())
 #
 
-# EAP_trigram_total = sum(EAP_trigram_dict.values())
-# HPL_trigram_total = sum(HPL_trigram_dict.values())
-# MWS_trigram_total = sum(MWS_trigram_dict.values())
-# #
 
 
-
-# EAP_bigram_V = len(EAP_bigram_dict.keys())
-# HPL_bigram_V = len(HPL_bigram_dict.keys())
-# MWS_bigram_V = len(MWS_bigram_dict.keys())
+EAP_bigram_V = len(EAP_bigram_dict.keys())
+HPL_bigram_V = len(HPL_bigram_dict.keys())
+MWS_bigram_V = len(MWS_bigram_dict.keys())
 #
 
 AUTHOR_LIST = ['EAP', 'HPL', 'MWS']
@@ -283,86 +283,10 @@ def _process_word(word):
 
 
 
-# ----------------------------------------------------------------------------------------------------------------------
-# stupid back-off bigram model
-# ----------------------------------------------------------------------------------------------------------------------
-BACK_OFF_PARAMETER = 1.4503
-
-
-actual_author_list = []
-pred_author_list = []
-
-submission_dict = collections.defaultdict(lambda :[])
-
-for _, row in validation_df.iterrows():
-    id = str(row['id'])
-    text = row['text']
-    if IsValidation:
-        author = row['author']
-        actual_author_list.append(author)
-    word_list = tokenize_word(text)
-
-    EAP_sentence_likelihood = 0.0
-    HPL_sentence_likelihood = 0.0
-    MWS_sentence_likelihood = 0.0
-
-    for j, word in enumerate(word_list):
-        word = _process_word(word)
-        word_list[j] = word
-
-    word_list = ['start_0'] + word_list + ['end_0']
-    bigrams_list = generate_bigrams(word_list)
-
-
-    for bigram in bigrams_list:
-        likelihood_tuple = _calculate_bigram_word_score(bigram)
-        likelihood_list = list(likelihood_tuple)
-
-        # stupid back-off
-        for index, likelihood in enumerate(likelihood_list):
-            if likelihood is None:
-                unigram_likelihood_tuple = _calculate_unigram_word_score(bigram[1])
-                likelihood_list[index] = BACK_OFF_PARAMETER * unigram_likelihood_tuple[index]
-
-        EAP_likelihood, HPL_likelihood, MWS_likelihood = likelihood_list
-
-
-        EAP_sentence_likelihood += math.log(EAP_likelihood)
-        HPL_sentence_likelihood += math.log(HPL_likelihood)
-        MWS_sentence_likelihood += math.log(MWS_likelihood)
-
-    likelihood_list = [EAP_sentence_likelihood, HPL_sentence_likelihood, MWS_sentence_likelihood]
-
-
-    if IsValidation:
-        max_index = likelihood_list.index(max(likelihood_list))
-        pred_author = AUTHOR_LIST[max_index]
-        pred_author_list.append(pred_author)
-    else:
-        likelihood_list = _softmax(likelihood_list)
-        submission_dict['id'].append(id)
-        submission_dict['EAP'].append(likelihood_list[0])
-        submission_dict['HPL'].append(likelihood_list[1])
-        submission_dict['MWS'].append(likelihood_list[2])
-
-
-if IsValidation:
-    accuracy = accuracy_score(actual_author_list, pred_author_list)
-    print (collections.Counter(pred_author_list))
-    print ("back-off bigram accuracy: ", accuracy)
-
-else:
-    submission_df = pd.DataFrame(submission_dict, columns = ['id', 'EAP', 'HPL', 'MWS'])
-    submission_df.to_csv(os.path.join(top_dir, 'submission', 'submission.csv'), index=False)
-# ----------------------------------------------------------------------------------------------------------------------
-
-
-
 # # ----------------------------------------------------------------------------------------------------------------------
-# # stupid back-off trigram model
+# # stupid back-off bigram model
 # # ----------------------------------------------------------------------------------------------------------------------
-# TRIGRAM_BACK_OFF_PARAMETER = 1.0
-# BIGRAM_BACK_OFF_PARAMETER = 1.4503
+# BACK_OFF_PARAMETER = 1.4503
 #
 #
 # actual_author_list = []
@@ -386,30 +310,19 @@ else:
 #         word = _process_word(word)
 #         word_list[j] = word
 #
+#     word_list = ['start_0'] + word_list + ['end_0']
+#     bigrams_list = generate_bigrams(word_list)
 #
-#     #word_list = ['start_1', 'start_0'] + word_list + ['end_0', 'end_1']
-#     trigrams_list = generate_trigrams(word_list)
 #
-#
-#     for trigram in trigrams_list:
-#         likelihood_tuple = _calculate_trigram_word_score(trigram)
+#     for bigram in bigrams_list:
+#         likelihood_tuple = _calculate_bigram_word_score(bigram)
 #         likelihood_list = list(likelihood_tuple)
 #
 #         # stupid back-off
 #         for index, likelihood in enumerate(likelihood_list):
 #             if likelihood is None:
-#                 bigram = (trigram[1], trigram[2])
-#                 bigram_likelihood_tuple = _calculate_bigram_word_score(bigram)
-#                 bigram_likelihood = bigram_likelihood_tuple[index]
-#                 if bigram_likelihood:
-#                     # trigram back-off
-#                     likelihood_list[index] = TRIGRAM_BACK_OFF_PARAMETER * bigram_likelihood
-#                 else:
-#                     # unigram back-off
-#                     unigram = bigram[1]
-#                     unigram_likelihood_tuple = _calculate_unigram_word_score(unigram)
-#                     likelihood_list[index] = TRIGRAM_BACK_OFF_PARAMETER * BIGRAM_BACK_OFF_PARAMETER * \
-#                                              unigram_likelihood_tuple[index]
+#                 unigram_likelihood_tuple = _calculate_unigram_word_score(bigram[1])
+#                 likelihood_list[index] = BACK_OFF_PARAMETER * unigram_likelihood_tuple[index]
 #
 #         EAP_likelihood, HPL_likelihood, MWS_likelihood = likelihood_list
 #
@@ -436,13 +349,101 @@ else:
 # if IsValidation:
 #     accuracy = accuracy_score(actual_author_list, pred_author_list)
 #     print (collections.Counter(pred_author_list))
-#     print ("back-off trigram accuracy: ", accuracy)
+#     print ("back-off bigram accuracy: ", accuracy)
 #
 # else:
 #     submission_df = pd.DataFrame(submission_dict, columns = ['id', 'EAP', 'HPL', 'MWS'])
 #     submission_df.to_csv(os.path.join(top_dir, 'submission', 'submission.csv'), index=False)
-#
 # # ----------------------------------------------------------------------------------------------------------------------
+
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+# stupid back-off trigram model
+# ----------------------------------------------------------------------------------------------------------------------
+TRIGRAM_BACK_OFF_PARAMETER = 1.0
+BIGRAM_BACK_OFF_PARAMETER = 1.4503
+
+
+actual_author_list = []
+pred_author_list = []
+
+submission_dict = collections.defaultdict(lambda :[])
+
+for _, row in validation_df.iterrows():
+    id = str(row['id'])
+    text = row['text']
+    if IsValidation:
+        author = row['author']
+        actual_author_list.append(author)
+    word_list = tokenize_word(text)
+
+    EAP_sentence_likelihood = 0.0
+    HPL_sentence_likelihood = 0.0
+    MWS_sentence_likelihood = 0.0
+
+    for j, word in enumerate(word_list):
+        word = _process_word(word)
+        word_list[j] = word
+
+
+    #word_list = ['start_1', 'start_0'] + word_list + ['end_0', 'end_1']
+    word_list = add_n_start(word_list, 2)
+    trigrams_list = generate_trigrams(word_list)
+
+
+    for trigram in trigrams_list:
+        likelihood_tuple = _calculate_trigram_word_score(trigram)
+        likelihood_list = list(likelihood_tuple)
+
+        # stupid back-off
+        for index, likelihood in enumerate(likelihood_list):
+            if likelihood is None:
+                bigram = (trigram[1], trigram[2])
+                bigram_likelihood_tuple = _calculate_bigram_word_score(bigram)
+                bigram_likelihood = bigram_likelihood_tuple[index]
+                if bigram_likelihood:
+                    # trigram back-off
+                    likelihood_list[index] = TRIGRAM_BACK_OFF_PARAMETER * bigram_likelihood
+                else:
+                    # unigram back-off
+                    unigram = bigram[1]
+                    unigram_likelihood_tuple = _calculate_unigram_word_score(unigram)
+                    likelihood_list[index] = TRIGRAM_BACK_OFF_PARAMETER * BIGRAM_BACK_OFF_PARAMETER * \
+                                             unigram_likelihood_tuple[index]
+
+        EAP_likelihood, HPL_likelihood, MWS_likelihood = likelihood_list
+
+
+        EAP_sentence_likelihood += math.log(EAP_likelihood)
+        HPL_sentence_likelihood += math.log(HPL_likelihood)
+        MWS_sentence_likelihood += math.log(MWS_likelihood)
+
+    likelihood_list = [EAP_sentence_likelihood, HPL_sentence_likelihood, MWS_sentence_likelihood]
+
+
+    if IsValidation:
+        max_index = likelihood_list.index(max(likelihood_list))
+        pred_author = AUTHOR_LIST[max_index]
+        pred_author_list.append(pred_author)
+    else:
+        likelihood_list = _softmax(likelihood_list)
+        submission_dict['id'].append(id)
+        submission_dict['EAP'].append(likelihood_list[0])
+        submission_dict['HPL'].append(likelihood_list[1])
+        submission_dict['MWS'].append(likelihood_list[2])
+
+
+if IsValidation:
+    accuracy = accuracy_score(actual_author_list, pred_author_list)
+    print (collections.Counter(pred_author_list))
+    print ("back-off trigram accuracy: ", accuracy)
+
+else:
+    submission_df = pd.DataFrame(submission_dict, columns = ['id', 'EAP', 'HPL', 'MWS'])
+    submission_df.to_csv(os.path.join(top_dir, 'submission', 'submission.csv'), index=False)
+
+# ----------------------------------------------------------------------------------------------------------------------
 
 
 
