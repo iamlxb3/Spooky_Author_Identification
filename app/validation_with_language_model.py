@@ -22,7 +22,7 @@ sys.path.append(top_dir)
 from other_funcs.nltk_funcs import preprocessing_word, tokenize_word, generate_bigrams, generate_trigrams, add_n_start
 
 
-IsValidation = True
+IsValidation = False
 
 if IsValidation:
     language_dict_dir = os.path.join(data_dir, 'language_dict_validation')
@@ -361,8 +361,8 @@ def _process_word(word):
 # ----------------------------------------------------------------------------------------------------------------------
 # stupid back-off trigram model
 # ----------------------------------------------------------------------------------------------------------------------
-TRIGRAM_BACK_OFF_PARAMETER = 1.0
-BIGRAM_BACK_OFF_PARAMETER = 1.4503
+BIGRAM_BACK_OFF_PARAMETER = 1
+TRIGRAM_BACK_OFF_PARAMETER = 1.92
 
 
 actual_author_list = []

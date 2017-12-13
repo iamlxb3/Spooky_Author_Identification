@@ -10,6 +10,7 @@ import random
 import pandas as pd
 import collections
 import pickle
+from sklearn.ensemble import BaggingClassifier
 
 
 #import io
@@ -102,7 +103,7 @@ def max_n_gram(N):
 
 def max_features_generator(N):
     for i in range(N):
-        yield random.randint(1000, 10000)
+        yield random.randint(10000, 30000)
 
 def token_pattern_generator(N):
     token_pattern_list = [r"[\w']+|[.,!?;]", r"(?u)\b\w\w+\b"]
@@ -110,7 +111,7 @@ def token_pattern_generator(N):
         yield random.sample(token_pattern_list, 1)[0]
 # ----------------------------------------------------------------------------------------------------------------------
 
-N = 50
+N = 100
 hyper_parameter_df = []
 hyper_parameter_name_list = ['LDA_n_topics','learning_rate_init','hidden_layer_1_size','hidden_layer_2_size',
                              'alpha','max_n_gram','early_stopping','validation_fraction','max_features',
@@ -120,17 +121,32 @@ hyper_parameter_name_list = ['LDA_n_topics','learning_rate_init','hidden_layer_1
 for generator_tuple in zip(LDA_n_topics(N), learning_rate_generator(N), hidden_layer_1_size(N), hidden_layer_2_size(N),
                            alpha_generator(N), max_n_gram(N), early_stopping_generator(N),
                            validation_fraction_generator(N), max_features_generator(N), token_pattern_generator(N)):
+
+    generator_tuple = list(generator_tuple)
     LDA_n_topics = generator_tuple[0]
     learning_rate_init = generator_tuple[1]
     hidden_layer_1_size = generator_tuple[2]
     hidden_layer_2_size = generator_tuple[3]
     alpha = generator_tuple[4]
     early_stopping = generator_tuple[6]
-    validation_fraction = generator_tuple[7]
+    if early_stopping:
+        generator_tuple[6] = 1 # map True to 1
+        validation_fraction = generator_tuple[7]
+    else:
+        generator_tuple[6] = 0 # map False to 0
+        generator_tuple[7] = 0.0
+        validation_fraction = 0.0
+
     # tfidf
     max_n_gram = generator_tuple[5]
     max_features = generator_tuple[8]
     token_pattern = generator_tuple[9]
+    if token_pattern == r"[\w']+|[.,!?;]":
+        generator_tuple[9] = 1 #mapping
+    elif token_pattern == r"(?u)\b\w\w+\b":
+        generator_tuple[9] = 2 #mapping
+    else:
+        raise Exception("Check token_pattern!!")
 
     # ----------------------------------------------------------------------------------------------------------------------
     # set MLP
