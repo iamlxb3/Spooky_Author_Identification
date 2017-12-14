@@ -54,7 +54,7 @@ def generate_trigrams(word_list):
             trigrams_list.append(phrases)
     return trigrams_list
 
-def add_n_start(word_list, n):
+def add_n_start(word_list, n=1):
     n_start_list = ['start_{}'.format(x) for x in range(n)]
     n_start_list.extend(word_list)
     return n_start_list

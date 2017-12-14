@@ -13,6 +13,7 @@ import pickle
 from sklearn.ensemble import BaggingClassifier
 
 
+
 #import io
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf8')
 
@@ -20,7 +21,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 top_dir = os.path.dirname(current_dir)
 sys.path.append(top_dir)
 data_dir = os.path.join(top_dir, 'data')
-from other_funcs.nltk_funcs import preprocessing_word, tokenize_word
+from other_funcs.nltk_funcs import preprocessing_word, tokenize_word, add_n_start
 from other_funcs.cv import create_k_fold
 
 IS_READ_FROM_TFIDF = False
@@ -42,6 +43,8 @@ else:
         for i, word in enumerate(word_list):
             word = word.lower()
             word_list[i] = preprocessing_word(word)
+
+        word_list = add_n_start(word_list)
         processed_text = ' '.join(word_list)
         processed_texts.append(processed_text)
 
@@ -69,12 +72,12 @@ def LDA_n_topics(N):
 # MLP
 def learning_rate_generator(N):
     for i in range(N):
-        learning_rate = random.uniform(0.0001,0.01)
+        learning_rate = random.uniform(0.0001,0.001)
         yield learning_rate
 
 def hidden_layer_1_size(N):
     for i in range(N):
-        size = random.randint(20,1000)
+        size = random.randint(200,1000)
         yield size
 
 def hidden_layer_2_size(N):
@@ -87,7 +90,7 @@ def alpha_generator(N):
         yield random.uniform(0.0001,0.001)
 
 def early_stopping_generator(N):
-    early_stopping_list = [True, False]
+    early_stopping_list = [True]
     for i in range(N):
         yield random.sample(early_stopping_list, 1)[0]
 
@@ -97,21 +100,22 @@ def validation_fraction_generator(N):
 
 # TFIDF
 def max_n_gram(N):
-    max_n_gram_list = [1,2,3]
+    max_n_gram_list = [2,3]
     for i in range(N):
         yield random.sample(max_n_gram_list, 1)[0]
 
 def max_features_generator(N):
     for i in range(N):
-        yield random.randint(10000, 30000)
+        yield random.randint(20000, 40000)
 
 def token_pattern_generator(N):
-    token_pattern_list = [r"[\w']+|[.,!?;]", r"(?u)\b\w\w+\b"]
+    token_pattern_list = [r"[\w']+|[.,!?;]"]
+    #token_pattern_list = [r"[\w']+|[.,!?;]", r"(?u)\b\w\w+\b"]
     for i in range(N):
         yield random.sample(token_pattern_list, 1)[0]
 # ----------------------------------------------------------------------------------------------------------------------
 
-N = 100
+N = 15
 hyper_parameter_df = []
 hyper_parameter_name_list = ['LDA_n_topics','learning_rate_init','hidden_layer_1_size','hidden_layer_2_size',
                              'alpha','max_n_gram','early_stopping','validation_fraction','max_features',

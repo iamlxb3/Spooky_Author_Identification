@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14744d81-bac9-4cd7-87ad-024f9a2c7f7b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/parameter_test_language_model.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/language_model_parameter_test.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/submission/mlp_tfidf.csv" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/skip_gram_output_dict" afterPath="$PROJECT_DIR$/data/skip_gram_output_dict" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/hyper_parameter_df.csv" afterPath="$PROJECT_DIR$/app/hyper_parameter_df.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/output_submission_by_LDA_MLP.py" afterPath="$PROJECT_DIR$/app/output_submission_by_LDA_MLP.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/train_by_LDA_MLP.py" afterPath="$PROJECT_DIR$/app/train_by_LDA_MLP.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/validation_with_language_model.py" afterPath="$PROJECT_DIR$/app/validation_with_language_model.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/submission/mlp_tfidf.csv" afterPath="$PROJECT_DIR$/submission/mlp_tfidf.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/submission/submission.csv" afterPath="$PROJECT_DIR$/submission/submission.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/other_funcs/nltk_funcs.py" afterPath="$PROJECT_DIR$/other_funcs/nltk_funcs.py" />
     </list>
     <ignored path="data/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,11 +22,33 @@
       <file leaf-file-name="train_by_LDA_MLP.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/train_by_LDA_MLP.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="588">
-              <caret line="145" column="43" lean-forward="true" selection-start-line="145" selection-start-column="43" selection-end-line="145" selection-end-column="43" />
+            <state relative-caret-position="326">
+              <caret line="46" column="36" lean-forward="true" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="output_submission_by_LDA_MLP.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/output_submission_by_LDA_MLP.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="461">
+              <caret line="75" column="13" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nltk_funcs.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/other_funcs/nltk_funcs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="641">
+              <caret line="55" column="0" lean-forward="true" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -45,18 +63,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="output_submission_by_LDA_MLP.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/output_submission_by_LDA_MLP.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="644">
-              <caret line="142" column="61" lean-forward="true" selection-start-line="142" selection-start-column="61" selection-end-line="142" selection-end-column="61" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="bagging.py" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda3/Lib/site-packages/sklearn/ensemble/bagging.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -67,11 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mlp_tfidf.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/submission/mlp_tfidf.csv">
+      <file leaf-file-name="hyper_parameter_df.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/hyper_parameter_df.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="14" lean-forward="false" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
+            <state relative-caret-position="42">
+              <caret line="2" column="56" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -82,16 +88,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="803">
               <caret line="5736" column="55" lean-forward="false" selection-start-line="5736" selection-start-column="55" selection-end-line="5736" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hyper_parameter_df.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/hyper_parameter_df.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="8" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -136,10 +132,10 @@
         <option value="$PROJECT_DIR$/model/mlp_sklearn.py" />
         <option value="$PROJECT_DIR$/app/create_LDA_data.py" />
         <option value="$PROJECT_DIR$/app/hyper_parameter_df.csv" />
-        <option value="$PROJECT_DIR$/other_funcs/nltk_funcs.py" />
         <option value="$PROJECT_DIR$/app/build_unigram_bigram_trigram_dict.py" />
         <option value="$PROJECT_DIR$/app/parameter_test_language_model.py" />
         <option value="$PROJECT_DIR$/app/validation_with_language_model.py" />
+        <option value="$PROJECT_DIR$/other_funcs/nltk_funcs.py" />
         <option value="$PROJECT_DIR$/app/train_by_LDA_MLP.py" />
         <option value="$PROJECT_DIR$/app/output_submission_by_LDA_MLP.py" />
       </list>
@@ -179,11 +175,6 @@
               <item name="Spooky_Author_Identification" type="b2602c69:ProjectViewProjectNode" />
               <item name="Spooky_Author_Identification" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Spooky_Author_Identification" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Spooky_Author_Identification" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Spooky_Author_Identification" type="b2602c69:ProjectViewProjectNode" />
@@ -278,20 +269,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/validation_with_language_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="672">
-          <caret line="43" column="64" lean-forward="false" selection-start-line="43" selection-start-column="64" selection-end-line="43" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build_unigram_bigram_trigram_dict.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/prepare_train_test_data.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1470">
@@ -521,6 +498,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="283">
           <caret line="876" column="8" lean-forward="false" selection-start-line="876" selection-start-column="8" selection-end-line="876" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -554,13 +532,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/other_funcs/nltk_funcs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="924">
-          <caret line="57" column="16" lean-forward="false" selection-start-line="57" selection-start-column="4" selection-end-line="57" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/validation_with_language_model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="496">
@@ -583,10 +554,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/submission/mlp_tfidf.csv">
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda3/Lib/site-packages/sklearn/utils/validation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="14" lean-forward="false" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
+        <state relative-caret-position="293">
+          <caret line="564" column="4" lean-forward="false" selection-start-line="564" selection-start-column="4" selection-end-line="564" selection-end-column="4" />
           <folding />
         </state>
       </provider>
@@ -599,26 +570,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/hyper_parameter_df.csv">
+    <entry file="file://$PROJECT_DIR$/submission/0.40137.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="8" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda3/Lib/site-packages/sklearn/utils/validation.py">
+    <entry file="file://$PROJECT_DIR$/submission/0.38753.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="564" column="4" lean-forward="false" selection-start-line="564" selection-start-column="4" selection-end-line="564" selection-end-column="4" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/submission/mlp_tfidf.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="19" lean-forward="true" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/hyper_parameter_df.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="56" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/other_funcs/nltk_funcs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="641">
+          <caret line="55" column="0" lean-forward="true" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/train_by_LDA_MLP.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="145" column="43" lean-forward="true" selection-start-line="145" selection-start-column="43" selection-end-line="145" selection-end-column="43" />
+        <state relative-caret-position="326">
+          <caret line="46" column="36" lean-forward="true" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -627,8 +622,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/output_submission_by_LDA_MLP.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="142" column="61" lean-forward="true" selection-start-line="142" selection-start-column="61" selection-end-line="142" selection-end-column="61" />
+        <state relative-caret-position="461">
+          <caret line="75" column="13" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="13" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
