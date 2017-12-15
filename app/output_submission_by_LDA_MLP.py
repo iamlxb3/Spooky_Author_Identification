@@ -71,7 +71,7 @@ print ("Zip X and y successfully!")
 # TFIDF
 # ----------------------------------------------------------------------------------------------------------------------
 max_n_gram = 3
-max_features = 38817
+max_features = 69007
 token_pattern = r"[\w']+|[.,!?;]" #r"(?u)\b\w\w+\b", r"[\w']+|[.,!?;]"
 tf_vectorizer = TfidfVectorizer(ngram_range=(1, max_n_gram), max_features=max_features, token_pattern=token_pattern)
 # ----------------------------------------------------------------------------------------------------------------------
@@ -79,14 +79,15 @@ tf_vectorizer = TfidfVectorizer(ngram_range=(1, max_n_gram), max_features=max_fe
 # ----------------------------------------------------------------------------------------------------------------------
 # set MLP
 # ----------------------------------------------------------------------------------------------------------------------
-# 88,0.004246793295141108,694,31,0.0005964262212002591,3,1,0.07346135635039965,38817,1
+# [32, 0.00037102170307415464, 1702, 12, 0.00028978377640992073, 2, 1, 0.10208091220642544, 55468, 1]
+# [53, 0.000285394313284153, 1419, 3, 0.00031358220214879637, 3, 1, 0.058307423056713645, 69007, 1]
 # LDA_n_topics,learning_rate_init,hidden_layer_1_size,hidden_layer_2_size,alpha,max_n_gram,early_stopping,validation_fraction,max_features,token_pattern,avg_accuracy
 
-hidden_layer_1_size = 694
-learning_rate_init = 0.004246793295141108
-alpha = 0.0005964262212002591
+hidden_layer_1_size = 1419
+learning_rate_init = 0.000285394313284153
+alpha = 0.00031358220214879637
 early_stopping = True
-validation_fraction = 0.07346135635039965
+validation_fraction = 0.058307423056713645
 
 hidden_layer_sizes = (hidden_layer_1_size, )
 verbose = True

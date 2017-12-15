@@ -77,12 +77,12 @@ def learning_rate_generator(N):
 
 def hidden_layer_1_size(N):
     for i in range(N):
-        size = random.randint(200,1000)
+        size = random.randint(500,1200)
         yield size
 
 def hidden_layer_2_size(N):
     for i in range(N):
-        size = random.randint(2, 40)
+        size = random.randint(4, 7)
         yield size
 
 def alpha_generator(N):
@@ -96,7 +96,7 @@ def early_stopping_generator(N):
 
 def validation_fraction_generator(N):
     for i in range(N):
-        yield random.uniform(0.05, 0.3)
+        yield random.uniform(0.2, 0.4)
 
 # TFIDF
 def max_n_gram(N):
@@ -106,7 +106,7 @@ def max_n_gram(N):
 
 def max_features_generator(N):
     for i in range(N):
-        yield random.randint(20000, 40000)
+        yield random.randint(30000, 50000)
 
 def token_pattern_generator(N):
     token_pattern_list = [r"[\w']+|[.,!?;]"]
@@ -155,7 +155,7 @@ for generator_tuple in zip(LDA_n_topics(N), learning_rate_generator(N), hidden_l
     # ----------------------------------------------------------------------------------------------------------------------
     # set MLP
     # ----------------------------------------------------------------------------------------------------------------------
-    hidden_layer_sizes = (hidden_layer_1_size, )
+    hidden_layer_sizes = (hidden_layer_1_size, hidden_layer_2_size)
     verbose = False
     tol = 1e-5
     max_iter = 1000
